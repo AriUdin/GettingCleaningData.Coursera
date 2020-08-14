@@ -16,7 +16,8 @@ for (i in c("train","test")) {
     }
     rm("file")
     if (!exists("merged.dataset")) {merged.dataset = dataset; rm("dataset"); next}
-    merged.dataset <- merge(dataset, merged.dataset, by = intersect(names(dataset), names(merged.dataset)), all = TRUE)
+    merged.dataset <- merge(dataset, merged.dataset,
+                            by = intersect(names(dataset), names(merged.dataset)), all = TRUE)
     rm("dataset")
 }
 
@@ -43,4 +44,5 @@ extracted.dataset[,1:2] <- lapply(extracted.dataset[,1:2], as.factor)
 Id.and.Activity.meanVar <- aggregate(. ~ Id + Activity, extracted.dataset, mean)
 
 ## Generating new tidy data file
-write.table(Id.and.Activity.meanVar, file = "New_tidy_dataset.txt", sep = " ", col.names = NA, qmethod = "double")
+write.table(Id.and.Activity.meanVar, file = "New_tidy_dataset.txt", sep = " ",
+            qmethod = "double", row.names = FALSE)
